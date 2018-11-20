@@ -1,6 +1,10 @@
 <template>
     <div class="container row">
         <div class="row">
+            <div v-if="authUser">
+                <h2>SignedIn </h2>
+                <button @click="signOut"> Sign Out </button>
+            </div>
             <div id="signIn" v-if="login" class="col-md-6">
                 <div>
                     <form @submit="checklogin">
@@ -15,7 +19,7 @@
                             <input type="password" v-model="password" class="form-control" placeholder="Enter your password">
                             <br>
                         </div>
-                    <button class="btn btn-light" @click="registration"><a href="#register">Register</a></button>
+                    <button class="btn btn-light" @click="registration">Register</button>
                     <button class="btn btn-light" type="submit">Submit</button>
                 </form>
                 </div>
@@ -25,14 +29,18 @@
                     <form @submit="adduser">
                         <div class="form-group">
                             <p>Registration</p>
-                            <label for="name">Name</label>
+                            <!-- <label for="name">Name</label>
                             <br>
                             <input type="text" v-model="newUser.name" class="form-control" placeholder="Enter your name">
+                            <br> -->
+                            <label for="email">Email</label>
                             <br>
-                            <label for="userID">Username</label>
+                            <input type="email" v-model="newUser.email" class="form-control" placeholder="Enter your email id">
+                            <br>
+                            <!-- <label for="userID">Username</label>
                             <br>
                             <input type="text" v-model="newUser.username" class="form-control" placeholder="Enter your username">
-                            <br>
+                            <br> -->
                             <label for="password">Password</label>
                             <br>
                             <input type="password" v-model="newUser.regPassword" class="form-control" placeholder="Enter your password">
@@ -42,7 +50,7 @@
                             <input type="password" v-model="newUser.confirmedPassword" class="form-control" placeholder="Confirm your password">
                             <br>
                         </div>
-                    <button class="btn btn-light" @click="loginPage"><a href="#login">Login</a></button>
+                    <button class="btn btn-light" @click="loginPage">Login</button>
                     <button class="btn btn-light" type="submit">Submit</button>
                 </form>
                 </div>
@@ -106,32 +114,23 @@
     </div>
 </template>
 <script>
+
+// import router from './routes';
+
 export default {
     data(){
         return{
             login: true,
             userID: "",
             password: "",
-            database: [
-                {
-                    username: "Alex",
-                    password: 123,
-                },
-                {
-                    username: "Grace",
-                    password: 987,
-                },
-                {
-                    username: "Vinita",
-                    password: 456,
-                }
-            ],
             newUser:{
                 name: "",
+                email: "",
                 username: "",
                 regPassword: "",
                 confirmedPassword: ""
-            }
+            },
+            authUser: null
         }
     },
     methods: {
@@ -140,29 +139,49 @@ export default {
                 return this.login = false;
             }
         },
-        adduser: function() {
-            if(this.newUser.name != "" && this.newUser.username != "" && this.newUser.regPassword === this.newUser.confirmedPassword){
-                this.$http.post('https://gratitude-app-195b6.firebaseio.com/users.json', this.newUser).then(function(data){
-                    console.log(data)
-                });
-            }
+        adduser: function(e) {
+                firebase.auth().createUserWithEmailAndPassword(this.newUser.email, this.newUser.regPassword)
+                // .then(function(user){
+                //     alert("Congratulations!! Your account has been created");
+                //     // this.$router.push('/home')
+                //     // function(
+                //     },
+                //     err => {
+                //         alter ("Opps" + err.message)}
             
-        },
+                // )
+                },
         
         loginPage: function(e){
             if (e){
                 return this.login = true;
             }   
         },
-        checklogin: function() {
-            for (var i =0; i< this.database.length; i++){
-                if (this.userID ==this.database[i].username && this.password == this.database[i].password){
-                    console.log("sucess");
-                    break;
-                }
-            }
+
+        checklogin: function(e) {
+            firebase.auth().signInWithEmailAndPassword(this.userID, this.password)
+            // .then(function(user){
+            //     alert(`Suceessfully logged in ${user}`);
+            //     // this.$router.push('/home')
+            // })
+            // for (var i =0; i< this.database.length; i++){
+            //     if (this.userID ==this.database[i].username && this.password == this.database[i].password){
+            //         console.log("sucess");
+            //         break;
+            //     }
+            // }
             
+        },
+
+        signOut: function() {
+            firebase.auth().signOut()
         }
+    },
+
+    created() {
+        firebase.auth().onAuthStateChanged(user => {
+            this.authUser = user;
+        })
     }
 }
 
