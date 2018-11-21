@@ -3,6 +3,14 @@ import page from './gratitude-page.vue';
 
 export default [
     {
+        path: "*", 
+        component: page,
+        name: "home",
+        meta: {
+            requiresAuth: true
+        }
+},
+    {
         path: "/", 
         name: "login",
         component: signIn
@@ -11,8 +19,8 @@ export default [
         path: "/home", 
         component: page,
         name: "home",
-        // meta: {
-            // requiresAuth: true
-        // }
+        meta: {
+            requiresAuth: true
+        }
 }
 ]

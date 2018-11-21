@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <app-nav></app-nav>
     <app-progress :listCount="lists.length" :maxList="maxList"></app-progress>
     <app-new-list @itemAdded="newItem"></app-new-list>
     <app-list-grid :lists="lists" @itemDeleted="deleteItem"></app-list-grid>
@@ -15,6 +16,7 @@
   import ListGrid from './components/ListGrid.vue';
   import NewList from './components/NewList.vue';
   import Progress from './components/Progress.vue';
+  import Nav from './components/Nav.vue';
 
   export default {
       data: function() {
@@ -34,13 +36,13 @@
         },
         deleteItem(cur) {
           this.lists.splice(cur, 1);
-
-        }
+        },
       },
       components: {
         "app-list-grid": ListGrid,
         "app-new-list": NewList,
-        "app-progress": Progress
+        "app-progress": Progress,
+        "app-nav": Nav
       }
     }
 </script>

@@ -1,13 +1,13 @@
 <template>
     <div class="container row">
         <div class="row">
-            <div v-if="authUser">
+            <!-- <div v-if="authUser">
                 <h2>SignedIn </h2>
                 <button @click="signOut"> Sign Out </button>
-            </div>
+            </div> -->
             <div id="signIn" v-if="login" class="col-md-6">
                 <div>
-                    <form @submit="checklogin">
+                    <form>
                         <div class="form-group">
                             <p>Login</p>
                             <label for="userID">Username</label>
@@ -20,7 +20,7 @@
                             <br>
                         </div>
                     <button class="btn btn-light" @click="registration">Register</button>
-                    <button class="btn btn-light" type="submit">Submit</button>
+                    <button class="btn btn-light" type="submit" @click="checklogin"><router-link to="/home"> Submit </router-link></button>
                 </form>
                 </div>
             </div>
@@ -114,9 +114,6 @@
     </div>
 </template>
 <script>
-
-// import router from './routes';
-
 export default {
     data(){
         return{
@@ -141,15 +138,6 @@ export default {
         },
         adduser: function(e) {
                 firebase.auth().createUserWithEmailAndPassword(this.newUser.email, this.newUser.regPassword)
-                // .then(function(user){
-                //     alert("Congratulations!! Your account has been created");
-                //     // this.$router.push('/home')
-                //     // function(
-                //     },
-                //     err => {
-                //         alter ("Opps" + err.message)}
-            
-                // )
                 },
         
         loginPage: function(e){
@@ -159,18 +147,11 @@ export default {
         },
 
         checklogin: function(e) {
-            firebase.auth().signInWithEmailAndPassword(this.userID, this.password)
-            // .then(function(user){
-            //     alert(`Suceessfully logged in ${user}`);
-            //     // this.$router.push('/home')
-            // })
-            // for (var i =0; i< this.database.length; i++){
-            //     if (this.userID ==this.database[i].username && this.password == this.database[i].password){
-            //         console.log("sucess");
-            //         break;
-            //     }
-            // }
-            
+            firebase.auth().signInWithEmailAndPassword(this.userID, this.password).then(function(user){
+                alert(`Successfully loggedin ${user.user.email}! :)`)
+                }).catch(function(err){
+                    alert(`Oops!! ${err.message}`)
+            })
         },
 
         signOut: function() {

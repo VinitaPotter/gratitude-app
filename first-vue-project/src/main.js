@@ -2,9 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
-import signIn from './sign-in.vue';
-import page from './gratitude-page.vue';
-// import Routes from './routes'
+import Routes from './routes'
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -21,23 +19,8 @@ const config = {
 firebase.initializeApp(config);
 
 let router = new VueRouter({
-  // routes: Routes, 
+  routes: Routes, 
   mode:'history',
-  routes:  [
-    {
-      path: "/", 
-      name: "login",
-      component: signIn
-  },
-  {
-      path: "/home", 
-      component: page,
-      name: "home",
-      meta: {
-          requiresAuth: true
-      }
-  }
-]
 });
 
 
@@ -45,8 +28,8 @@ router.beforeEach((to, from, next) => {
   let currentUser = firebase.auth().currentUser;
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) next('/')
-  else if (!requiresAuth && currentUser) next()
+  if (requiresAuth && !currentUser) next()
+  else if (!requiresAuth && currentUser) next('/home')
   else next()
 })
 
