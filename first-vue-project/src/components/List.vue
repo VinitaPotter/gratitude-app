@@ -1,6 +1,6 @@
 <template>
     <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="panel panel-default">
+        <div v-colors class="panel panel-default">
             <div class="panel-body list">
                 <slot></slot>
             </div>
@@ -8,16 +8,11 @@
     </div>
 </template>
 
-// <script>
-//     export default {
-//         props: ['lists']
-//     }
-// </script>
 <style>
     .panel-body { 
-        font-family: 'Patrick Hand SC', cursive;
-        font-size: 24 px;
-        color: blue;
+        
+        font-size: 18px;
+        color: #484848;
     }
 
     .list {

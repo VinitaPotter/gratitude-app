@@ -1,10 +1,10 @@
 <template>
     <div class="row">
         <nav>
-            <ol>
-                <li>Home</li>
-                <li @click="signOut"><router-link to="/"> Sign Out </router-link></li>
-            </ol>
+            <ul>
+                <li class="nav-link">Home</li>
+                <li class="nav-link" @click="signOut"><router-link to="/"> Sign Out </router-link></li>
+            </ul>
         </nav>
         
     </div>
@@ -19,5 +19,23 @@ export default {
 }
 </script>
 <style>
+nav {
+    position: relative;
+    
+}
+
+ul {
+    display: flex;
+    text-align: center;
+    list-style: none;
+     justify-content: flex-end;
+}
+
+li {
+    padding-top: 10px;
+    padding-right: 50px;
+    color: black;
+}
+
 
 </style>

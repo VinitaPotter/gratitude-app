@@ -4,8 +4,18 @@ import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import Routes from './routes'
 
+
+
 Vue.use(VueResource);
 Vue.use(VueRouter);
+
+Vue.directive('colors', {
+      bind(el, binding, vnode){
+          const colors = ['#4E3E66','#2A9ECA', '#714243', '#FDE7CD','#F3D232', '#559F52', '#29A899', '#4FB38E', '#E78543', '#F8C548', '#FBCBCE' , '#706587'];
+          el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          el.style.color = "#fff";
+      }
+})
 
 // Initialize Firebase
 const config = {
@@ -28,7 +38,7 @@ router.beforeEach((to, from, next) => {
   let currentUser = firebase.auth().currentUser;
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) next()
+  if (requiresAuth && !currentUser) next('/')
   else if (!requiresAuth && currentUser) next('/home')
   else next()
 })

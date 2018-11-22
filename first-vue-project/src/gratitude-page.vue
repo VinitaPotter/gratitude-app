@@ -6,7 +6,7 @@
     <app-list-grid :lists="lists" @itemDeleted="deleteItem"></app-list-grid>
     <div class="row">
       <div class="col-sm-12 text-center">
-        <div class="alert alert-info">Click on an item to delete it</div>
+        <div class="footer">Click on an item to delete it</div>
       </div>
     </div>
   </div>
@@ -46,5 +46,18 @@
       }
     }
 </script>
+<style>
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.8em;
+}
+
+.footer {
+    background-color:#EAE6EA;
+    filter: sepia(25%);
+    position: relative;
+    bottom: 0;
+}
+</style>
 
 

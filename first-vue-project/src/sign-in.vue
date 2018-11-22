@@ -1,46 +1,38 @@
 <template>
     <div class="container row">
         <div class="row">
-            <!-- <div v-if="authUser">
-                <h2>SignedIn </h2>
-                <button @click="signOut"> Sign Out </button>
-            </div> -->
-            <div id="signIn" v-if="login" class="col-md-6">
+            <div id="signIn" v-if="login" class="col-md-12 col-sm-12 col-12">
                 <div>
                     <form>
                         <div class="form-group">
-                            <p>Login</p>
+                            <h1 class="display-4 mb-3">Login</h1>
                             <label for="userID">Username</label>
                             <br>
                             <input type="text" v-model="userID" class="form-control" placeholder="Enter your username">
                             <br>
                             <label for="password">Password</label>
                             <br>
-                            <input type="password" v-model="password" class="form-control" placeholder="Enter your password">
+                            <input type="password" v-model="password" class="form-control" placeholder="Enter your password"> 
                             <br>
                         </div>
-                    <button class="btn btn-light" @click="registration">Register</button>
-                    <button class="btn btn-light" type="submit" @click="checklogin"><router-link to="/home"> Submit </router-link></button>
+                    <button class="btn btn-light" @click.prevent="registration">Register</button>
+                    <button class="btn btn-light" type="submit" @click.prevent="checklogin"><router-link to="/home"> Submit </router-link></button>
                 </form>
                 </div>
             </div>
-            <div id="register" v-else class="col-md-6">
+            <div id="register" v-else class="col-md-12 col-sm-12 col-12">
                 <div>
-                    <form @submit="adduser">
+                    <form>
                         <div class="form-group">
-                            <p>Registration</p>
-                            <!-- <label for="name">Name</label>
+                            <h1>Registration</h1>
+                            <label for="name">Name</label>
                             <br>
                             <input type="text" v-model="newUser.name" class="form-control" placeholder="Enter your name">
-                            <br> -->
+                            <br>
                             <label for="email">Email</label>
                             <br>
                             <input type="email" v-model="newUser.email" class="form-control" placeholder="Enter your email id">
                             <br>
-                            <!-- <label for="userID">Username</label>
-                            <br>
-                            <input type="text" v-model="newUser.username" class="form-control" placeholder="Enter your username">
-                            <br> -->
                             <label for="password">Password</label>
                             <br>
                             <input type="password" v-model="newUser.regPassword" class="form-control" placeholder="Enter your password">
@@ -51,63 +43,17 @@
                             <br>
                         </div>
                     <button class="btn btn-light" @click="loginPage">Login</button>
-                    <button class="btn btn-light" type="submit">Submit</button>
+                    <button class="btn btn-light" type="submit" @click="adduser">Submit</button>
                 </form>
                 </div>
             </div>
-
-            <div id="reminder" class="col-md-6">
-                    <!-- <div class="wow infinite slideOutUp"  data-wow-duration="20s" > -->
-                        <div class="card wow slideOutUp"  data-wow-duration="50s">
+            <div id="reminder" class="col-md-6 col-sm-12">
+                        <div v-colors v-for="quote in quotes" class="card wow slideOutUp"  data-wow-duration="50s">
                             <div class="card-body">
-                                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, pariatur?</p>
+                                <p class="card-text">{{ quote }}</p>
                             </div>
                         </div>
-                        <div class="card  wow slideOutUp"  data-wow-duration="50s">
-                            <div class="card-body">
-                                <p class="card-text">Odio, sunt vero veniam eaque obcaecati consequatur rerum molestias earum.</p>
-                            </div>
-                        </div>
-                        <div class="card  wow slideOutUp"  data-wow-duration="50s">
-                            <div class="card-body">
-                                <p class="card-text">Reprehenderit et delectus, quod modi odit minus repellat harum exercitationem?</p>
-                            </div>
-                        </div>
-                        <div class="card  wow slideOutUp"  data-wow-duration="50s">
-                            <div class="card-body">
-                                <p class="card-text">Deserunt aliquid rerum velit ipsam inventore quisquam similique vel. Sunt.</p>
-                            </div>
-                        </div>
-                        <div class="card  wow slideOutUp"  data-wow-duration="50s">
-                            <div class="card-body">
-                                <p class="card-text">Eligendi doloremque quidem repellendus voluptas iure modi impedit autem culpa!</p>
-                            </div>
-                        </div>
-                        <div class="card  wow slideOutUp"  data-wow-duration="50s">
-                            <div class="card-body">
-                                <p class="card-text">Dolores animi nemo ex neque ipsum aspernatur maxime? Sequi, quasi.</p>
-                            </div>
-                        </div>
-                        <div class="card  wow slideOutUp"  data-wow-duration="50s">
-                            <div class="card-body">
-                                <p class="card-text">Totam iste obcaecati aperiam tempore enim fugiat asperiores unde quis?</p>
-                            </div>
-                        </div>
-                        <div class="card  wow slideOutUp"  data-wow-duration="50s">
-                            <div class="card-body">
-                                <p class="card-text">Odio, similique aliquid magni facilis esse qui deleniti alias nihil?</p>
-                            </div>
-                        </div>
-                        <div class="card  wow slideOutUp"  data-wow-duration="50s">
-                            <div class="card-body">
-                                <p class="card-text">Officiis ab labore assumenda deleniti ad voluptatibus facere amet quaerat?</p>
-                            </div>
-                        </div>
-                        <div class="card  wow slideOutUp"  data-wow-duration="50s">
-                            <div class="card-body">
-                                <p class="card-text">Molestiae delectus expedita iusto, ipsa repudiandae numquam odio. Optio, tenetur!</p>
-                            </div>
-                        <!-- </div> -->
+                        
                 </div>
             </div>
         </div>
@@ -127,7 +73,17 @@ export default {
                 regPassword: "",
                 confirmedPassword: ""
             },
-            authUser: null
+            authUser: null,
+            quotes: ['Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, pariatur?',
+                    'Odio, sunt vero veniam eaque obcaecati consequatur rerum molestias earum',
+                    'Reprehenderit et delectus, quod modi odit minus repellat harum exercitationem?',
+                    'Deserunt aliquid rerum velit ipsam inventore quisquam similique vel. Sunt.',
+                    'Eligendi doloremque quidem repellendus voluptas iure modi impedit autem culpa!',
+                    'Totam iste obcaecati aperiam tempore enim fugiat asperiores unde quis?',
+                    'Odio, similique aliquid magni facilis esse qui deleniti alias nihil?',
+                    'Officiis ab labore assumenda deleniti ad voluptatibus facere amet quaerat?',
+                    'Molestiae delectus expedita iusto, ipsa repudiandae numquam odio. Optio, tenetur!'
+            ]
         }
     },
     methods: {
@@ -164,11 +120,17 @@ export default {
             this.authUser = user;
         })
     }
+
+    
 }
 
 </script>
 
 <style>
+ h1,
+ label {
+     color: white;
+ }
 
 .container {
     margin-top: 50px;
@@ -176,15 +138,25 @@ export default {
 }
 
 #signIn,
+#register,
 #reminder {
+    background-color: #EAE6EA;
     width: 45%;
-    background-color: #eee;
+    filter: sepia(25%);
+    
+ }
+
+ #register {
+     padding-bottom: 50px;
  }
 
 #signIn {
     margin: auto 20px;
     padding: 20px; 
     height: 500px;
+    background-image: url(https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8b5d177ad38580e039c7f403c0554ea6&auto=format&fit=crop&w=967&q=80);
+    filter: sepia(25%);
+    background-position: center;
 
 }
 
@@ -207,6 +179,24 @@ export default {
     height: 50px;
 
 }
+
+body {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 767px) {
+    #signIn,
+    #reminder {
+    width: 92%;
+
+    }
+    
+    #reminder {
+        display: none;
+    }
+}
+
 
 
 

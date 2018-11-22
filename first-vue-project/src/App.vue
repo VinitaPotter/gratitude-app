@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <router-view></router-view>
+    <gratitude-page></gratitude-page>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
