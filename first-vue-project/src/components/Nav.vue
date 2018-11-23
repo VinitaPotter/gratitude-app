@@ -37,5 +37,9 @@ li {
     color: black;
 }
 
+a {
+    color: black;
+}
+
 
 </style>

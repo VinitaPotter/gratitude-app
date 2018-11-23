@@ -13,4 +13,10 @@ export default {
         props: ['listCount', 'maxList']
 }
 </script>
+<style>
+.progress-bar {
+    background-color: pink;
+}
+</style>
+
 

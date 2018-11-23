@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 
 Vue.directive('colors', {
       bind(el, binding, vnode){
-          const colors = ['#4E3E66','#2A9ECA', '#714243', '#FDE7CD','#F3D232', '#559F52', '#29A899', '#4FB38E', '#E78543', '#F8C548', '#FBCBCE' , '#706587'];
+          const colors = ['#2A9ECA', '#FDE7CD','#F3D232', '#559F52', '#29A899', '#4FB38E', '#E78543', '#F8C548', '#FBCBCE' , '#706587'];
           el.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
           el.style.color = "#fff";
       }
@@ -27,6 +27,8 @@ const config = {
   messagingSenderId: "832440527485"
 };
 firebase.initializeApp(config);
+// const db = firebase.firestore();
+// db.settings({ timestampsInSnapshots: true });
 
 let router = new VueRouter({
   routes: Routes, 

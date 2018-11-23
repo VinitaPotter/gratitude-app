@@ -4,6 +4,7 @@
     <app-progress :listCount="lists.length" :maxList="maxList"></app-progress>
     <app-new-list @itemAdded="newItem"></app-new-list>
     <app-list-grid :lists="lists" @itemDeleted="deleteItem"></app-list-grid>
+    <button class=" btn btn-warning save" @click="addToDB">Save</button>
     <div class="row">
       <div class="col-sm-12 text-center">
         <div class="footer">Click on an item to delete it</div>
@@ -30,9 +31,24 @@
       methods: {
         newItem(lists) {
           if (this.lists.length >= this.maxList) {
-            alert("You're done for today!! :) ")
+            alert("You're done for today!! :) ");
+            return
           }
           this.lists.push(lists);
+          // let db = firebase.firestore();
+          // db.settings({ timestampsInSnapshots: true });
+          // db.collection('users').get().then((snapshots) => {
+          //   snapshots.docs.forEach(docs => {
+          //     console.log(docs)
+          //   });
+          // })
+        },
+        addToDB(lists) {
+          const db = firebase.firestore();
+          db.settings({ timestampsInSnapshots: true });
+          db.collection('users').add({
+            item: this.lists
+          })
         },
         deleteItem(cur) {
           this.lists.splice(cur, 1);
@@ -57,6 +73,12 @@ body {
     filter: sepia(25%);
     position: relative;
     bottom: 0;
+}
+
+.save {
+  margin: 20px auto; 
+  display: flex;
+  align-self: flex-end;
 }
 </style>
 

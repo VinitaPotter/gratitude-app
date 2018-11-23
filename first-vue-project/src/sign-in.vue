@@ -69,9 +69,9 @@ export default {
             newUser:{
                 name: "",
                 email: "",
-                username: "",
                 regPassword: "",
-                confirmedPassword: ""
+                confirmedPassword: "",
+                joining: new Date().toJSON() 
             },
             authUser: null,
             quotes: ['Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, pariatur?',
@@ -93,6 +93,8 @@ export default {
             }
         },
         adduser: function(e) {
+            const db = firebase.firestore();
+                db.settings({ timestampsInSnapshots: true });
                 firebase.auth().createUserWithEmailAndPassword(this.newUser.email, this.newUser.regPassword)
                 },
         
