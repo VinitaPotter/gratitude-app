@@ -35,19 +35,13 @@
             return
           }
           this.lists.push(lists);
-          // let db = firebase.firestore();
-          // db.settings({ timestampsInSnapshots: true });
-          // db.collection('users').get().then((snapshots) => {
-          //   snapshots.docs.forEach(docs => {
-          //     console.log(docs)
-          //   });
-          // })
         },
         addToDB(lists) {
           const db = firebase.firestore();
+          const auth = firebase.auth();
           db.settings({ timestampsInSnapshots: true });
-          db.collection('users').add({
-            item: this.lists
+          db.collection('users').doc(auth.currentUser.uid).collection('lists').doc().set({
+            lists: this.lists
           })
         },
         deleteItem(cur) {

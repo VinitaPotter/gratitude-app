@@ -22,8 +22,11 @@ export default {
     },
     methods: {
         createNew() {
-            this.$emit('itemAdded', this.list);
-            this.list = ' ';
+            if(this.list != "") {
+                this.$emit('itemAdded', this.list);
+                this.list = ' ';
+            }
+            
         }
     }
 }

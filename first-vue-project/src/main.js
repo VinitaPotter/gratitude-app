@@ -3,9 +3,9 @@ import App from './App.vue'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import Routes from './routes'
+import Vuex, { createNamespacedHelpers } from 'vuex'
 
-
-
+Vue.use(Vuex)
 Vue.use(VueResource);
 Vue.use(VueRouter);
 
@@ -27,8 +27,6 @@ const config = {
   messagingSenderId: "832440527485"
 };
 firebase.initializeApp(config);
-// const db = firebase.firestore();
-// db.settings({ timestampsInSnapshots: true });
 
 let router = new VueRouter({
   routes: Routes, 
@@ -45,10 +43,11 @@ router.beforeEach((to, from, next) => {
   else next()
 })
 
+
 export default router;
 
 new Vue({
   el: '#app',
   render: h => h(App),
-  router: router
+  router: router,
 })

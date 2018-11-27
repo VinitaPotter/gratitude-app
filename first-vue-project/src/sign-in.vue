@@ -43,12 +43,12 @@
                             <br>
                         </div>
                     <button class="btn btn-light" @click="loginPage">Login</button>
-                    <button class="btn btn-light" type="submit" @click="adduser">Submit</button>
+                    <button class="btn btn-light" type="submit" @click.prevent="adduser">Submit</button>
                 </form>
                 </div>
             </div>
             <div id="reminder" class="col-md-6 col-sm-12">
-                        <div v-colors v-for="quote in quotes" class="card wow slideOutUp"  data-wow-duration="50s">
+                        <div v-colors v-for="(quote, cur) in quotes" :key="cur" class="card wow slideOutUp"  data-wow-duration="50s">
                             <div class="card-body">
                                 <p class="card-text">{{ quote }}</p>
                             </div>
@@ -93,10 +93,19 @@ export default {
             }
         },
         adduser: function(e) {
-            const db = firebase.firestore();
+            let self = this
+            firebase.auth().createUserWithEmailAndPassword(this.newUser.email, this.newUser.regPassword).then(function(user) {
+                console.log(user)
+                const db = firebase.firestore();
+                const auth = firebase.auth();
                 db.settings({ timestampsInSnapshots: true });
-                firebase.auth().createUserWithEmailAndPassword(this.newUser.email, this.newUser.regPassword)
-                },
+                db.collection('users').doc(auth.currentUser.uid).set({
+                    name: self.newUser.name,
+                    email: self.newUser.email,
+                    date: self.newUser.joining 
+                })
+                })
+        },
         
         loginPage: function(e){
             if (e){
@@ -118,8 +127,10 @@ export default {
     },
 
     created() {
-        firebase.auth().onAuthStateChanged(user => {
-            this.authUser = user;
+        let self = this
+        firebase.auth().onAuthStateChanged(firebaseUser => {
+            this.authUser = firebaseUser;
+                self.checklogin(this.authUser);
         })
     }
 
@@ -131,7 +142,7 @@ export default {
 <style>
  h1,
  label {
-     color: white;
+     color: #383838;
  }
 
 .container {
@@ -179,7 +190,16 @@ export default {
 }
 .card-body {
     height: 50px;
+    color: #383838;
 
+}
+
+.btn > a {
+    color: #383838;
+}
+
+.bth > a:hover {
+    text-decoration: none;
 }
 
 body {
