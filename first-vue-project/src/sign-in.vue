@@ -37,7 +37,7 @@
                             <br>
                             <input type="password" v-model="newUser.regPassword" class="form-control" placeholder="Enter your password">
                             <br>
-                            <label for="confirmation">Password</label>
+                            <label for="confirmation">Confirm Password</label>
                             <br>
                             <input type="password" v-model="newUser.confirmedPassword" class="form-control" placeholder="Confirm your password">
                             <br>
@@ -48,16 +48,18 @@
                 </div>
             </div>
             <div id="reminder" class="col-md-6 col-sm-12">
-                        <div v-colors v-for="(quote, cur) in quotes" :key="cur" class="card wow slideOutUp"  data-wow-duration="50s">
-                            <div class="card-body">
+                        <div v-for="(quote, cur) in quotes" :key="cur">
+                            <div v-colors class="card wow slideOutUp infinite"  data-wow-duration="50s">
+                                <div class="card-body">
                                 <p class="card-text">{{ quote }}</p>
                             </div>
+                            </div>
+                            
                         </div>
                         
                 </div>
             </div>
         </div>
-    </div>
 </template>
 <script>
 export default {
@@ -74,15 +76,16 @@ export default {
                 joining: new Date().toJSON() 
             },
             authUser: null,
-            quotes: ['Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem, pariatur?',
-                    'Odio, sunt vero veniam eaque obcaecati consequatur rerum molestias earum',
-                    'Reprehenderit et delectus, quod modi odit minus repellat harum exercitationem?',
-                    'Deserunt aliquid rerum velit ipsam inventore quisquam similique vel. Sunt.',
-                    'Eligendi doloremque quidem repellendus voluptas iure modi impedit autem culpa!',
-                    'Totam iste obcaecati aperiam tempore enim fugiat asperiores unde quis?',
-                    'Odio, similique aliquid magni facilis esse qui deleniti alias nihil?',
-                    'Officiis ab labore assumenda deleniti ad voluptatibus facere amet quaerat?',
-                    'Molestiae delectus expedita iusto, ipsa repudiandae numquam odio. Optio, tenetur!'
+            quotes: [`“At times, our own light goes out and is rekindled by a spark from another person. Each of us has cause to think with             deep gratitude of those who have lighted the flame within us.” – Albert Schweitze`,
+                    `“Gratitude is the fairest blossom which springs from the soul.” – Henry Ward Beecher`,
+                    `“Gratitude is a powerful catalyst for happiness. It’s the spark that lights a fire of joy in your soul.” – Amy Collette`,
+                    `“Thankfulness is the beginning of gratitude. Gratitude is the completion of thankfulness. Thankfulness may consist merely of words. Gratitude is shown in acts.” – Henri Frederic Amiel`,
+                    `“Happiness cannot be traveled to owned, earned, worn or consumed. Happiness is the spiritual experience of living every minute with love, grace, and gratitude.” – Denis Waitley`,
+                    `“In ordinary life, we hardly realize that we receive a great deal more than we give, and that it is only with gratitude that life becomes rich.” – Dietrich Bonhoeffer`,
+                    `“Gratitude is not only the greatest of virtues but the parent of all others.” – Marcus Tullius Cicero`,
+                    `“Gratitude is when memory is stored in the heart and not in the mind.” – Lionel Hampton`,
+                    `“Two kinds of gratitude: The sudden kind we feel for what we take; the larger kind we feel for what we give.” – Edwin Arlington Robinson`,
+                    `“Gratitude helps you to grow and expand; gratitude brings joy and laughter into your life and into the lives of all those around you.” – Eileen Caddy`,
             ]
         }
     },
@@ -94,8 +97,8 @@ export default {
         },
         adduser: function(e) {
             let self = this
-            firebase.auth().createUserWithEmailAndPassword(this.newUser.email, this.newUser.regPassword).then(function(user) {
-                console.log(user)
+            if (self.newUser.confirmedPassword == self.newUser.regPassword){
+                firebase.auth().createUserWithEmailAndPassword(this.newUser.email, this.newUser.regPassword).then(function(user) {
                 const db = firebase.firestore();
                 const auth = firebase.auth();
                 db.settings({ timestampsInSnapshots: true });
@@ -105,6 +108,10 @@ export default {
                     date: self.newUser.joining 
                 })
                 })
+            } else {
+                alert("The passwords you entered do not match, please try again!")
+            }
+            
         },
         
         loginPage: function(e){
@@ -128,9 +135,11 @@ export default {
 
     created() {
         let self = this
-        firebase.auth().onAuthStateChanged(firebaseUser => {
-            this.authUser = firebaseUser;
-                self.checklogin(this.authUser);
+        let auth = firebase.auth()
+        auth.onAuthStateChanged(firebaseUser => {
+            if(auth.currentUser == firebaseUser){
+                this.$router.push('/home')
+            }
         })
     }
 
@@ -189,8 +198,10 @@ export default {
     margin-bottom: 70px;
 }
 .card-body {
-    height: 50px;
+    height: 100px;
     color: #383838;
+    display: grid;
+    place-items: center;
 
 }
 
@@ -200,6 +211,7 @@ export default {
 
 .bth > a:hover {
     text-decoration: none;
+    cursor: pointer;
 }
 
 body {

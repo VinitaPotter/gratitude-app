@@ -6,7 +6,7 @@
                 <textarea class ="form-control" row="3" v-model="list"></textarea>
             </div>
             <div class="col-sm-8 col-sm-offset-2 col-xs-12 col-ms-6 col-md-offset-3 form-group">
-                <button class="btn btn-warning" @click.prevent="createNew">Add item</button>
+                <button class="btn btn-warning"  @click.prevent="createNew">Add item</button>
             </div>
         </form>
     </div>
@@ -22,10 +22,11 @@ export default {
     },
     methods: {
         createNew() {
-            if(this.list != "") {
+            if(this.list.length >= 1){
                 this.$emit('itemAdded', this.list);
-                this.list = ' ';
+                this.list = '';
             }
+                
             
         }
     }

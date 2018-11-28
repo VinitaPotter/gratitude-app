@@ -1,8 +1,9 @@
 <template>
     <div class="row">
+        <p> Hello {{ user }}!! ☺ </p>
         <nav>
             <ul>
-                <li class="nav-link">Home</li>
+                <li class="nav-link"><router-link to="/home"> Home </router-link></li>
                 <li class="nav-link" @click="signOut"><router-link to="/"> Sign Out </router-link></li>
             </ul>
         </nav>
@@ -11,6 +12,12 @@
 </template>
 <script>
 export default {
+    data: function() {
+        return {
+            user: firebase.auth().currentUser.email.slice(0, firebase.auth().currentUser.email.indexOf("@"))
+        }
+    },
+
     methods: {
         signOut: function() {
             firebase.auth().signOut()
@@ -41,5 +48,8 @@ a {
     color: black;
 }
 
+a:hover {
+    text-decoration: none;
+}
 
 </style>

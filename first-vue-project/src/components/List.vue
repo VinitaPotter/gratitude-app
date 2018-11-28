@@ -10,13 +10,15 @@
 
 <style>
     .panel-body { 
-        
+        height: 150px;
         font-size: 18px;
         color: #484848;
+        overflow: auto;
     }
 
     .list {
         cursor: pointer;
+        color: black;
     }
 
     .list:hover {
